@@ -5,7 +5,7 @@
 	<property name="build.classes.dir" value="${build.dir}/classes" />
 	<property name="src.dir" value="${basedir}/src" />
 	<property name="doc.dir" value="${build.dir}/doc" />
-	<property name="res.dir" value="${build.dir}/res" />
+	<property name="res.dir" value="${basedir}/res" />
 	<property name="jar.dir" value="${build.dir}/jar" />
 	<property name="jar.file.path" value="${jar.dir}/t3m.jar" />
 
@@ -51,7 +51,7 @@
 	</target>
 	
 	<target name="jrun" depends="dist" description="Runs the created .jar file">
-		<java jar="${jar.file.path}"/>
+		<java jar="${jar.file.path}" fork = "true"/>
 	</target>
 
 
