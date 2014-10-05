@@ -1,7 +1,6 @@
 package ee.ut.math.tvt.t3m;
 
 import java.awt.*; 
-
 import javax.swing.*;
 
 public class IntroUI extends JFrame {
@@ -21,9 +20,12 @@ public class IntroUI extends JFrame {
 		setLocation(300, 200);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		
-		teamName = new JLabel("<html><p style='text-align:right;'>The<br>Three<br>Musketeers</p></html>", SwingConstants.RIGHT);  // construct a JLabel
+		teamName = new JLabel("<html><p style='text-align:right;'>The<br>Three<br>Musketeers</p></html>", SwingConstants.LEFT);  // construct a JLabel
 		teamName.setVerticalTextPosition(JLabel.TOP);
+		teamName.setVerticalAlignment(JLabel.TOP);
 		teamName.setFont(new Font("Serif", Font.PLAIN, 40));
 		teamDesc = new JLabel("<html>"
 				+ "<p><strong>Team leader:</strong> Ardo Aednik</p>"
