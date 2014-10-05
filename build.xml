@@ -33,7 +33,7 @@
 			<classpath refid="compile.classpath" />
 		</javac>
 	</target>
-	
+
 	<target name="clean" description="Clean up build system results">
 		<delete dir="${build.dir}" />
 	</target>
@@ -42,16 +42,18 @@
 		<jar destfile="${jar.file.path}">
 			<fileset dir="${build.classes.dir}" />
 			<fileset dir="${res.dir}" />
-			<fileset dir="${basedir}" includes = "*.properties" />
+			<fileset dir="${basedir}" includes="*.properties" />
+			<manifest>
+				<attribute name="Main-Class" value="ee.ut.math.tvt.t3m.Intro" />
+			</manifest>
 		</jar>
-		<propertyfile
-		    file="version.properties">
-		  <entry  key="build.revision.number" type="int" default="0" operation="+"/>
+		<propertyfile file="version.properties">
+			<entry key="build.revision.number" type="int" default="0" operation="+" />
 		</propertyfile>
 	</target>
-	
+
 	<target name="jrun" depends="dist" description="Runs the created .jar file">
-		<java jar="${jar.file.path}" fork = "true"/>
+		<java jar="${jar.file.path}" fork="true" />
 	</target>
 
 
