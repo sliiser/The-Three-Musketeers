@@ -5,7 +5,11 @@ import java.awt.*;
 import javax.swing.*;
 
 public class IntroUI extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
+
 	// see on IntroUI
+	
 	JPanel panel;
 	
 	JLabel teamName, teamDesc;
