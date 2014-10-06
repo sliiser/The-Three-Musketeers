@@ -18,8 +18,6 @@ public class IntroUI extends JFrame {
 
 	private static final Logger log = Logger.getLogger(IntroUI.class);
 	private static final long serialVersionUID = 1L;
-
-	// see on IntroUI
 	
 	JPanel panel;
 	
