@@ -6,18 +6,19 @@
 	<property name="src.dir" value="${basedir}/src" />
 	<property name="doc.dir" value="${build.dir}/doc" />
 	<property name="res.dir" value="${basedir}/res" />
+	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="jar.dir" value="${build.dir}/jar" />
 	<property name="jar.file.path" value="${jar.dir}/t3m.jar" />
 
 	<path id="compile.classpath">
-		<fileset dir="lib">
+		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
 	</path>
 
 	<path id="test.classpath">
 		<pathelement location="${build.classes.dir}" />
-		<fileset dir="lib">
+		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
 	</path>
@@ -42,6 +43,7 @@
 		<jar destfile="${jar.file.path}">
 			<fileset dir="${build.classes.dir}" />
 			<fileset dir="${res.dir}" />
+			<zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
 			<fileset dir="${basedir}" includes="*.properties" />
 			<manifest>
 				<attribute name="Main-Class" value="ee.ut.math.tvt.t3m.Intro" />
@@ -49,6 +51,10 @@
 		</jar>
 		<propertyfile file="version.properties">
 			<entry key="build.revision.number" type="int" default="0" operation="+" />
+		</propertyfile>
+		<property file="version.properties" />
+		<propertyfile file="version.properties">
+			<entry key="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
 		</propertyfile>
 	</target>
 
