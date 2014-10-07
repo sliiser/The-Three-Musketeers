@@ -4,9 +4,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -41,15 +38,10 @@ public class IntroUI extends JFrame {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		
-		FileInputStream fileInput = null;
-		FileInputStream fileInputVersion = null;
-		
 		try {
-			fileInput = new FileInputStream(new File("application.properties"));
-			fileInputVersion = new FileInputStream(new File("version.properties"));
 			Properties properties = new Properties();
-			properties.load(fileInput);
-			properties.load(fileInputVersion);
+			properties.load(getClass().getResourceAsStream("/application.properties"));
+			properties.load(getClass().getResourceAsStream("/version.properties"));
 		
 			teamName = new JLabel("<html><p style='text-align:center;'>"+ properties.getProperty("team.name") +"</p></html>", SwingConstants.LEFT);  // construct a JLabel
 			teamName.setVerticalTextPosition(JLabel.TOP);
@@ -63,24 +55,12 @@ public class IntroUI extends JFrame {
 					+ "</html>",SwingConstants.CENTER);
 			teamDesc.setVerticalTextPosition(JLabel.TOP);
 			teamDesc.setVerticalAlignment(JLabel.TOP);
-			add(new JLabel(new ImageIcon("res/logo.png")));
+			add(new JLabel(new ImageIcon(getClass().getResource("/logo.png"))));
 		    add(teamName); 
 		    add(teamDesc);
 			log.info("window is open");
-		} catch (FileNotFoundException e) {
-			log.error("File not found", e);
 		} catch (IOException e) {
-			log.error("IOException", e);
-		} finally{
-			try{
-				fileInput.close();
-				fileInputVersion.close();
-			}catch(RuntimeException rte){
-				//ignore
-			} catch (IOException e) {
-				//ignore
-			}
+			log.error("IOException when loading properties or image", e);
 		}
-		
 	}
 }

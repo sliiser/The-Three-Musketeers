@@ -18,6 +18,8 @@
 
 	<path id="test.classpath">
 		<pathelement location="${build.classes.dir}" />
+		<pathelement location="${basedir}" />
+		<pathelement location="${res.dir}" />
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
@@ -40,15 +42,6 @@
 	</target>
 
 	<target name="dist" depends="build" description="Creates a distributable .jar file">
-		<jar destfile="${jar.file.path}">
-			<fileset dir="${build.classes.dir}" />
-			<fileset dir="${res.dir}" />
-			<zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
-			<fileset dir="${basedir}" includes="*.properties" />
-			<manifest>
-				<attribute name="Main-Class" value="ee.ut.math.tvt.t3m.Intro" />
-			</manifest>
-		</jar>
 		<propertyfile file="version.properties">
 			<entry key="build.revision.number" type="int" default="0" operation="+" />
 		</propertyfile>
@@ -56,6 +49,15 @@
 		<propertyfile file="version.properties">
 			<entry key="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
 		</propertyfile>
+		<jar destfile="${jar.file.path}">
+			<fileset dir="${build.classes.dir}" />
+			<fileset dir="${res.dir}" />
+			<zipgroupfileset dir="${lib.dir}" includes="*.jar" />
+			<fileset dir="${basedir}" includes="*.properties" />
+			<manifest>
+				<attribute name="Main-Class" value="ee.ut.math.tvt.t3m.Intro" />
+			</manifest>
+		</jar>
 	</target>
 
 	<target name="jrun" depends="dist" description="Runs the created .jar file">
