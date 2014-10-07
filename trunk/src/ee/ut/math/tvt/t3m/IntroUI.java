@@ -1,17 +1,24 @@
 package ee.ut.math.tvt.t3m;
 
-import java.awt.*; 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
-import org.apache.log4j.Logger;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
 public class IntroUI extends JFrame {
@@ -29,22 +36,20 @@ public class IntroUI extends JFrame {
 		BasicConfigurator.configure(consoleAppender);
 		setLayout(new FlowLayout(FlowLayout.CENTER,20,20));
 		setSize(500,400);
-		setLocation(300, 200);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+		
+		FileInputStream fileInput = null;
+		FileInputStream fileInputVersion = null;
 		
 		try {
-			File file = new File("application.properties");
-			File fileVersion = new File("version.properties");
-			FileInputStream fileInput = new FileInputStream(file);
-			FileInputStream fileInputVersion = new FileInputStream(fileVersion);
+			fileInput = new FileInputStream(new File("application.properties"));
+			fileInputVersion = new FileInputStream(new File("version.properties"));
 			Properties properties = new Properties();
 			properties.load(fileInput);
 			properties.load(fileInputVersion);
-			fileInput.close();
-			fileInputVersion.close();
 		
 			teamName = new JLabel("<html><p style='text-align:center;'>"+ properties.getProperty("team.name") +"</p></html>", SwingConstants.LEFT);  // construct a JLabel
 			teamName.setVerticalTextPosition(JLabel.TOP);
@@ -63,9 +68,18 @@ public class IntroUI extends JFrame {
 		    add(teamDesc);
 			log.info("window is open");
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			log.error("File not found", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("IOException", e);
+		} finally{
+			try{
+				fileInput.close();
+				fileInputVersion.close();
+			}catch(RuntimeException rte){
+				//ignore
+			} catch (IOException e) {
+				//ignore
+			}
 		}
 		
 	}
