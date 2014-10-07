@@ -19,7 +19,6 @@
 	<path id="test.classpath">
 		<pathelement location="${build.classes.dir}" />
 		<pathelement location="${basedir}" />
-		<pathelement location="${res.dir}" />
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
@@ -51,9 +50,9 @@
 		</propertyfile>
 		<jar destfile="${jar.file.path}">
 			<fileset dir="${build.classes.dir}" />
-			<fileset dir="${res.dir}" />
 			<zipgroupfileset dir="${lib.dir}" includes="*.jar" />
 			<fileset dir="${basedir}" includes="*.properties" />
+			<fileset dir="${basedir}" includes="res/*" />
 			<manifest>
 				<attribute name="Main-Class" value="ee.ut.math.tvt.t3m.Intro" />
 			</manifest>
