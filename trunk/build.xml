@@ -120,6 +120,8 @@
 		<input message="Username" addproperty="username" />
 		<input message="Password" addproperty="password" />
 
+		<property name="args" value=""/>
+		
 		<git command="push">
 			<args>
 				<arg value="https://${username}:${password}@${repo.url}" />
