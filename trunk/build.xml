@@ -65,7 +65,7 @@
 
 	<macrodef name="git">
 		<attribute name="command" />
-		<attribute name="dir" default="" />
+		<attribute name="dir" default=".." />
 		<element name="args" optional="true" />
 		<sequential>
 			<echo message="git @{command}" />
@@ -82,7 +82,7 @@
 		<echo message="Commiting all changes with message ${commit-message}" />
 		<git command="add">
 			<args>
-				<arg value="." />
+				<arg value="-A" />
 			</args>
 		</git>
 		<git command="commit">
@@ -90,7 +90,16 @@
 				<arg value="-am ${commit-message}" />
 			</args>
 		</git>
-		<git command="push" />
+
+		<property file="login.properties" />
+		<input message="Username" addproperty="username" />
+		<input message="Password" addproperty="password" />
+
+		<git command="push">
+			<args>
+				<arg value="https://${username}:${password}@github.com/sliiser/The-Three-Musketeers.git" />
+			</args>
+		</git>
 	</target>
 
 
