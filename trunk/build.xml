@@ -95,15 +95,7 @@
 			</args>
 		</git>
 
-		<property file="login.properties" />
-		<input message="Username" addproperty="username" />
-		<input message="Password" addproperty="password" />
-
-		<git command="push">
-			<args>
-				<arg value="https://${username}:${password}@${repo.url}" />
-			</args>
-		</git>
+		<antcall target="git_push" />
 	</target>
 
 	<target name="git_tag" description="Creates a new tag for homework submission and pushes the changes">
@@ -118,6 +110,12 @@
 			</args>
 		</git>
 
+		<antcall target="git_push">
+			<param name="args" value="--tags" />
+		</antcall>
+	</target>
+
+	<target name="git_push" description="Pushes all commits to the remote repo">
 		<property file="login.properties" />
 		<input message="Username" addproperty="username" />
 		<input message="Password" addproperty="password" />
@@ -125,10 +123,9 @@
 		<git command="push">
 			<args>
 				<arg value="https://${username}:${password}@${repo.url}" />
-				<arg value="--tags" />
+				<arg value="${args}" />
 			</args>
 		</git>
-
 	</target>
 </project>
 
