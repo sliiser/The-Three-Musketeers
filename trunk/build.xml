@@ -9,6 +9,7 @@
 	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="jar.dir" value="${build.dir}/jar" />
 	<property name="jar.file.path" value="${jar.dir}/t3m.jar" />
+	<property name="repo.url" value="github.com/sliiser/The-Three-Musketeers.git" />
 
 	<path id="compile.classpath">
 		<fileset dir="${lib.dir}">
@@ -87,7 +88,7 @@
 		</git>
 		<git command="commit">
 			<args>
-				<arg value="-am ${commit-message}" />
+				<arg value="-m ${commit-message}" />
 			</args>
 		</git>
 
@@ -97,11 +98,34 @@
 
 		<git command="push">
 			<args>
-				<arg value="https://${username}:${password}@github.com/sliiser/The-Three-Musketeers.git" />
+				<arg value="https://${username}:${password}@${repo.url}" />
 			</args>
 		</git>
 	</target>
 
+	<target name="git_tag" description="Creates a new tag for homework submission and pushes the changes">
+		<input message="Please input the homework number" addproperty="n" />
 
+		<git command="tag">
+			<args>
+				<arg value="-a" />
+				<arg value="homework_${n}" />
+				<arg value="-m" />
+				<arg value="Homework ${n}" />
+			</args>
+		</git>
+
+		<property file="login.properties" />
+		<input message="Username" addproperty="username" />
+		<input message="Password" addproperty="password" />
+
+		<git command="push">
+			<args>
+				<arg value="https://${username}:${password}@${repo.url}" />
+				<arg value="--tags" />
+			</args>
+		</git>
+
+	</target>
 </project>
 
