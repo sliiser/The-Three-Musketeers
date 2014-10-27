@@ -7,6 +7,7 @@
 	<property name="doc.dir" value="${build.dir}/doc" />
 	<property name="res.dir" value="${basedir}/res" />
 	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="props.dir" value="${basedir}/properties" />
 	<property name="jar.dir" value="${build.dir}/jar" />
 	<property name="jar.file.path" value="${jar.dir}/t3m.jar" />
 	<property name="repo.url" value="github.com/sliiser/The-Three-Musketeers.git" />
@@ -19,7 +20,8 @@
 
 	<path id="test.classpath">
 		<pathelement location="${build.classes.dir}" />
-		<pathelement location="${basedir}" />
+		<pathelement location="${props.dir}" />
+		<pathelement location="${res.dir}" />
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
@@ -45,18 +47,18 @@
 	</target>
 
 	<target name="dist" depends="build" description="Creates a distributable .jar file">
-		<propertyfile file="version.properties">
+		<propertyfile file="${props.dir}/version.properties">
 			<entry key="build.revision.number" type="int" default="0" operation="+" />
 		</propertyfile>
-		<property file="version.properties" />
-		<propertyfile file="version.properties">
+		<property file="${props.dir}/version.properties" />
+		<propertyfile file="${props.dir}/version.properties">
 			<entry key="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
 		</propertyfile>
 		<jar destfile="${jar.file.path}">
 			<fileset dir="${build.classes.dir}" />
 			<zipgroupfileset dir="${lib.dir}" includes="*.jar" />
-			<fileset dir="${basedir}" includes="*.properties" />
-			<fileset dir="${basedir}" includes="res/*" />
+			<fileset dir="${props.dir}" includes="*.properties" />
+			<fileset dir="${res.dir}" includes="*" />
 			<manifest>
 				<attribute name="Main-Class" value="ee.ut.math.tvt.t3m.Intro" />
 			</manifest>
@@ -116,7 +118,7 @@
 	</target>
 
 	<target name="git_push" description="Pushes all commits to the remote repo">
-		<property file="login.properties" />
+		<property file="${props.dir}/login.properties" />
 		<input message="Username" addproperty="username" />
 		<input message="Password" addproperty="password" />
 

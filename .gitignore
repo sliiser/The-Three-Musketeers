@@ -1,6 +1,5 @@
 trunk/bin/
 trunk/.settings
-trunk/.classpath
 trunk/.project
-trunk/login.properties
+trunk/properties/login.properties
 trunk/build/
