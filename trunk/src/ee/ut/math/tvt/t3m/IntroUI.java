@@ -27,7 +27,7 @@ public class IntroUI extends JFrame {
 		setLayout(new FlowLayout(FlowLayout.CENTER,20,20));
 		setSize(500,400);
 		setResizable(false);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		

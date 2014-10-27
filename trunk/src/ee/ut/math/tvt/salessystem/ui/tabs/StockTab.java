@@ -1,10 +1,14 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.panels.AddItemPanel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -12,11 +16,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 
+import org.apache.log4j.Logger;
+
 
 public class StockTab {
-
+	
+  private static final Logger log = Logger.getLogger(PurchaseTab.class);
   private JButton addItem;
-
+  private AddItemPanel addItemPane;
   private SalesSystemModel model;
 
   public StockTab(SalesSystemModel model) {
@@ -58,7 +65,7 @@ public class StockTab {
     gc.anchor = GridBagConstraints.NORTHWEST;
     gc.weightx = 0;
 
-    addItem = new JButton("Add");
+    addItem = createAddProductButton();
     gc.gridwidth = GridBagConstraints.RELATIVE;
     gc.weightx = 1.0;
     panel.add(addItem, gc);
@@ -67,7 +74,17 @@ public class StockTab {
     return panel;
   }
 
-
+	//Creates the button "Add"
+	private JButton createAddProductButton() {
+	   JButton b = new JButton("Add");
+	   b.addActionListener(new ActionListener() {
+	     public void actionPerformed(ActionEvent e) {
+	       addProductButtonClicked();
+	     }
+	   });
+	
+	   return b;
+	}
   // table of the wareshouse stock
   private Component drawStockMainPane() {
     JPanel panel = new JPanel();
@@ -91,5 +108,12 @@ public class StockTab {
     panel.setBorder(BorderFactory.createTitledBorder("Warehouse status"));
     return panel;
   }
-
+  /** Event handler for the <code>new purchase</code> event. */
+  protected void addProductButtonClicked() {
+    log.info("Add product process started");
+    // Ava modal
+    addItemPane = new AddItemPanel(model);
+    addItemPane.setVisible(true);
+    //addItemPane.setAlwaysOnTop(true);
+  }
 }

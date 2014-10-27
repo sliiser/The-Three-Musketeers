@@ -1,6 +1,8 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
@@ -12,6 +14,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -38,7 +43,7 @@ public class PurchaseTab {
 
   public PurchaseItemPanel purchasePane;
 
-  public static Component buttonPane;
+  public Component buttonPane;
   
   private SalesSystemModel model;
 
@@ -67,7 +72,7 @@ public class PurchaseTab {
     panel.add(buttonPane, getConstraintsForPurchaseMenu());
 
     // Add the main purchase-panel
-    purchasePane = new PurchaseItemPanel(model);
+    purchasePane = new PurchaseItemPanel(model, this);
     panel.add(purchasePane, getConstraintsForPurchasePanel());
 
     return panel;
@@ -173,18 +178,29 @@ public class PurchaseTab {
 
   /** Event handler for the <code>submit purchase</code> event. */
   protected void submitPurchaseButtonClicked() {
-    log.info("Sale complete");
-    try {
     	log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
       	List<SoldItem> rows = model.getCurrentPurchaseTableModel().getTableRows();
       	if(rows.size() > 0) {
-		      purchasePane.showConfirmPane(rows);
-		      domainController.submitCurrentPurchase(rows);
-		      //endSale();
-		      //model.getCurrentPurchaseTableModel().clear();
+		    purchasePane.showConfirmPane(rows);
 		} else {
 			purchasePane.showError("Lisage mõni toode");
 		}
+  }
+
+  public void submitParsedOrder() {
+	 log.info("Sale complete");
+	 try {
+      List<SoldItem> rows = model.getCurrentPurchaseTableModel().getTableRows();
+
+	  DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+	  DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+	  Date date = new Date();
+	  HistoryItem addMe = new HistoryItem(dateFormat.format(date), timeFormat.format(date), rows);
+	  model.getHistoryTableModel().addItem(addMe);
+	  
+      domainController.submitCurrentPurchase(rows);
+      endSale();
+      model.getCurrentPurchaseTableModel().clear();
     } catch (VerificationFailedException e1) {
       log.error(e1.getMessage());
     }

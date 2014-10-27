@@ -9,6 +9,8 @@ public class SalesSystemModel {
     
     // Warehouse model
     private StockTableModel warehouseTableModel;
+    private HistoryTableModel historyTableModel;
+    private HistoryItemTableModel historyItemTableModel;
     
     // Current shopping cart model
     private PurchaseInfoTableModel currentPurchaseTableModel;
@@ -23,6 +25,8 @@ public class SalesSystemModel {
         this.domainController = domainController;
         
         warehouseTableModel = new StockTableModel();
+        historyTableModel = new HistoryTableModel();
+        historyItemTableModel = new HistoryItemTableModel();
         currentPurchaseTableModel = new PurchaseInfoTableModel();
 
         // populate stock model with data from the warehouse
@@ -36,6 +40,14 @@ public class SalesSystemModel {
 
     public PurchaseInfoTableModel getCurrentPurchaseTableModel() {
         return currentPurchaseTableModel;
+    }
+    
+    public HistoryTableModel getHistoryTableModel() {
+        return historyTableModel;
+    }
+    
+    public HistoryItemTableModel getHistoryItemTableModel() {
+        return historyItemTableModel;
     }
     
 }

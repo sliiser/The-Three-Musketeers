@@ -51,21 +51,22 @@ public class PurchaseItemPanel extends JPanel {
     private JComponent confirmPane;
 
     private JButton addItemButton;
+    private JButton confirmButton;
 
     // Warehouse model
     private SalesSystemModel model;
-
+    private PurchaseTab purchaseTab;
     /**
      * Constructs new purchase item panel.
      * 
      * @param model
      *            composite model of the warehouse and the shopping cart.
      */
-    public PurchaseItemPanel(SalesSystemModel model) {
+    public PurchaseItemPanel(SalesSystemModel model, PurchaseTab controller) {
         this.model = model;
 
         setLayout(new GridBagLayout());
-
+        purchaseTab = controller;
         dialogPane = drawDialogPane();
         add(dialogPane, getDialogPaneConstraints());
         basketPane = drawBasketPane();
@@ -102,14 +103,17 @@ public class PurchaseItemPanel extends JPanel {
     	dialogPane.setVisible(false);
     	basketPane.setVisible(false);
     	confirmPane.setVisible(true);
-    	PurchaseTab.buttonPane.setVisible(false);
+    	purchaseTab.buttonPane.setVisible(false);
     	
     }
-    public void cancelPurchase() {
+    public void resetPurchase() {
+    	totalField.setText("");
+    	paymentField.setText("");
+    	returnField.setText("");
     	dialogPane.setVisible(true);
     	basketPane.setVisible(true);
     	confirmPane.setVisible(false);
-    	PurchaseTab.buttonPane.setVisible(true);
+    	purchaseTab.buttonPane.setVisible(true);
     }
     // purchase dialog
     private JComponent drawConfirmPane() {
@@ -123,6 +127,11 @@ public class PurchaseItemPanel extends JPanel {
         paymentField.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
             	double sum = Double.parseDouble(paymentField.getText()) - Double.parseDouble(totalField.getText());
+            	if(sum >= 0) {
+            		confirmButton.setEnabled(true);
+            	} else {
+            		confirmButton.setEnabled(false);
+            	}
             	returnField.setText(Double.toString(sum));
             }
         });
@@ -142,19 +151,21 @@ public class PurchaseItemPanel extends JPanel {
         
 
     	// Create and add the button
-        JButton confirmButton = new JButton("Confirm purchase");
+        confirmButton = new JButton("Confirm purchase");
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //
+            	resetPurchase();
+            	purchaseTab.submitParsedOrder();
             }
         });
+        confirmButton.setEnabled(false);
         panel.add(confirmButton);
 
         // Create and add the button
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cancelPurchase();
+            	resetPurchase();
             }
         });
         panel.add(cancelButton);
