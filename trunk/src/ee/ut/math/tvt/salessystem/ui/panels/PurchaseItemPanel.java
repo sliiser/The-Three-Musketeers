@@ -2,6 +2,7 @@ package ee.ut.math.tvt.salessystem.ui.panels;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 import java.awt.GridBagConstraints;
@@ -21,6 +22,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 /**
  * Purchase pane + shopping cart tabel UI.
  */
@@ -28,12 +31,15 @@ public class PurchaseItemPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
+	private static final Logger log = Logger.getLogger(PurchaseInfoTableModel.class);
+	
     // Text field on the dialogPane
     private JComboBox<ComboItem> barCodeField;
     private JTextField quantityField;
     private JTextField nameField;
     private JTextField priceField;
-
+    private JLabel errorField;
+    
     private JButton addItemButton;
 
     // Warehouse model
@@ -85,6 +91,7 @@ public class PurchaseItemPanel extends JPanel {
         // Initialize the textfields
         barCodeField = new JComboBox<ComboItem>();
 
+		barCodeField.addItem(new ComboItem((long) 0, "Vali toode"));
 		for (final StockItem stockItem : model.getWarehouseTableModel().rows) {
 			barCodeField.addItem(new ComboItem(stockItem.getId(), stockItem.getName()));
 		}
@@ -119,8 +126,13 @@ public class PurchaseItemPanel extends JPanel {
         // - price
         panel.add(new JLabel("Price:"));
         panel.add(priceField);
-
-        // Create and add the button
+        
+        //
+        errorField = new JLabel();
+        panel.add(errorField);
+    	errorField.setVisible(false);
+        
+    	// Create and add the button
         addItemButton = new JButton("Add to cart");
         addItemButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -172,8 +184,19 @@ public class PurchaseItemPanel extends JPanel {
             } catch (NumberFormatException ex) {
                 quantity = 1;
             }
-            model.getCurrentPurchaseTableModel()
-                .addItem(new SoldItem(stockItem, quantity));
+            int stock = stockItem.getQuantity();
+            if(stock - quantity < 0) {
+            	errorField.setText("<html><font color='red'>Laos järel " + stock + " " + (stock == 1 ? "toode" : "toodet") + "!</font></html>");
+            	errorField.setVisible(true);
+            	log.debug(stockItem.getQuantity());
+            } else {
+            	errorField.setVisible(false);
+            	stockItem.setQuantity(stock - quantity);
+            	model.getCurrentPurchaseTableModel().addItem(new SoldItem(stockItem, quantity));
+            }
+        } else {
+        	errorField.setText("<html><font color='red'>Vali toode!</font></html>");
+        	errorField.setVisible(true);
         }
     }
 
