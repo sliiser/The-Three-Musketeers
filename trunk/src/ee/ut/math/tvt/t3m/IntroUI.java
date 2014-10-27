@@ -48,7 +48,7 @@ public class IntroUI extends JFrame {
 					+ "</html>",SwingConstants.CENTER);
 			teamDesc.setVerticalTextPosition(JLabel.TOP);
 			teamDesc.setVerticalAlignment(JLabel.TOP);
-			add(new JLabel(new ImageIcon(getClass().getResource("/res/logo.png"))));
+			add(new JLabel(new ImageIcon(getClass().getResource("/logo.png"))));
 		    add(teamName); 
 		    add(teamDesc);
 		    Intro.log.info("window is open");
