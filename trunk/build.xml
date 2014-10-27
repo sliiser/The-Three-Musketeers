@@ -83,7 +83,7 @@
 	<target name="git_commit" description="Commits and pushes your changes">
 		<input message="Commit message" addproperty="commit-message" />
 
-		<echo message="Commiting all changes with message ${commit-message}" />
+		<echo message="Commiting all changes with message '${commit-message}'" />
 		<git command="add">
 			<args>
 				<arg value="-A" />
