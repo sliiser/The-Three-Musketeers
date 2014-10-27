@@ -127,6 +127,7 @@
 		<git command="push">
 			<args>
 				<arg value="https://${username}:${password}@${repo.url}" />
+				<arg value="HEAD" />
 				<arg value="${args}" />
 			</args>
 		</git>
