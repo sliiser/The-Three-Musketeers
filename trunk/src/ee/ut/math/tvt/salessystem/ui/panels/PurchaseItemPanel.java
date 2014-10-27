@@ -4,12 +4,16 @@ import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.swing.BorderFactory;
@@ -38,8 +42,14 @@ public class PurchaseItemPanel extends JPanel {
     private JTextField quantityField;
     private JTextField nameField;
     private JTextField priceField;
+    private JTextField paymentField;
     private JLabel errorField;
-    
+    private JLabel returnField;
+    private JLabel totalField;
+    private JComponent dialogPane;
+    private JComponent basketPane;
+    private JComponent confirmPane;
+
     private JButton addItemButton;
 
     // Warehouse model
@@ -56,9 +66,13 @@ public class PurchaseItemPanel extends JPanel {
 
         setLayout(new GridBagLayout());
 
-        add(drawDialogPane(), getDialogPaneConstraints());
-        add(drawBasketPane(), getBasketPaneConstraints());
-
+        dialogPane = drawDialogPane();
+        add(dialogPane, getDialogPaneConstraints());
+        basketPane = drawBasketPane();
+        add(basketPane, getBasketPaneConstraints());
+        confirmPane = drawConfirmPane();
+        add(confirmPane, getConfirmPaneConstraints());
+        confirmPane.setVisible(false);
         setEnabled(false);
     }
 
@@ -79,7 +93,74 @@ public class PurchaseItemPanel extends JPanel {
 
         return basketPane;
     }
+    public void showConfirmPane(List<SoldItem> rows) {
+        double total = 0;
+		for (final SoldItem item : rows) {
+			total += item.getSum();
+		}
+		totalField.setText(Double.toString(total));
+    	dialogPane.setVisible(false);
+    	basketPane.setVisible(false);
+    	confirmPane.setVisible(true);
+    	PurchaseTab.buttonPane.setVisible(false);
+    	
+    }
+    public void cancelPurchase() {
+    	dialogPane.setVisible(true);
+    	basketPane.setVisible(true);
+    	confirmPane.setVisible(false);
+    	PurchaseTab.buttonPane.setVisible(true);
+    }
+    // purchase dialog
+    private JComponent drawConfirmPane() {
 
+        // Create the panel
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(5, 2));
+        panel.setBorder(BorderFactory.createTitledBorder("Purchase summary"));
+
+        paymentField = new JTextField();
+        paymentField.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+            	double sum = Double.parseDouble(paymentField.getText()) - Double.parseDouble(totalField.getText());
+            	returnField.setText(Double.toString(sum));
+            }
+        });
+        returnField = new JLabel();
+        totalField = new JLabel();
+        // - bar code
+        panel.add(new JLabel("Total sum:"));
+        panel.add(totalField);
+
+        // - amount
+        panel.add(new JLabel("Payment amount:"));
+        panel.add(paymentField);
+
+        // - name
+        panel.add(new JLabel("Return:"));
+        panel.add(returnField);
+        
+
+    	// Create and add the button
+        JButton confirmButton = new JButton("Confirm purchase");
+        confirmButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //
+            }
+        });
+        panel.add(confirmButton);
+
+        // Create and add the button
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cancelPurchase();
+            }
+        });
+        panel.add(cancelButton);
+        
+        return panel;
+    }
     // purchase dialog
     private JComponent drawDialogPane() {
 
@@ -186,8 +267,7 @@ public class PurchaseItemPanel extends JPanel {
             }
             int stock = stockItem.getQuantity();
             if(stock - quantity < 0) {
-            	errorField.setText("<html><font color='red'>Laos järel " + stock + " " + (stock == 1 ? "toode" : "toodet") + "!</font></html>");
-            	errorField.setVisible(true);
+            	showError("Laos järel " + stock + " " + (stock == 1 ? "toode" : "toodet"));
             	log.debug(stockItem.getQuantity());
             } else {
             	errorField.setVisible(false);
@@ -195,9 +275,13 @@ public class PurchaseItemPanel extends JPanel {
             	model.getCurrentPurchaseTableModel().addItem(new SoldItem(stockItem, quantity));
             }
         } else {
-        	errorField.setText("<html><font color='red'>Vali toode!</font></html>");
-        	errorField.setVisible(true);
+        	showError("Vali toode");
         }
+    }
+    
+    public void showError(String msg) {
+    	errorField.setText("<html><font color='red'>" + msg + "</font></html>");
+    	errorField.setVisible(true);
     }
 
     /**
@@ -238,6 +322,19 @@ public class PurchaseItemPanel extends JPanel {
         GridBagConstraints gc = new GridBagConstraints();
 
         gc.anchor = GridBagConstraints.WEST;
+        gc.weightx = 0.2;
+        gc.weighty = 0d;
+        gc.gridwidth = GridBagConstraints.REMAINDER;
+        gc.fill = GridBagConstraints.NONE;
+
+        return gc;
+    }
+
+    // Formatting constraints for the dialogPane
+    private GridBagConstraints getConfirmPaneConstraints() {
+        GridBagConstraints gc = new GridBagConstraints();
+
+        gc.anchor = GridBagConstraints.CENTER;
         gc.weightx = 0.2;
         gc.weighty = 0d;
         gc.gridwidth = GridBagConstraints.REMAINDER;

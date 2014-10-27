@@ -1,18 +1,23 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -25,14 +30,16 @@ public class PurchaseTab {
 
   private final SalesDomainController domainController;
 
-  private JButton newPurchase;
+  public JButton newPurchase;
 
-  private JButton submitPurchase;
+  public JButton submitPurchase;
 
-  private JButton cancelPurchase;
+  public JButton cancelPurchase;
 
-  private PurchaseItemPanel purchasePane;
+  public PurchaseItemPanel purchasePane;
 
+  public static Component buttonPane;
+  
   private SalesSystemModel model;
 
 
@@ -54,9 +61,10 @@ public class PurchaseTab {
     // Layout
     panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     panel.setLayout(new GridBagLayout());
-
+    
     // Add the purchase menu
-    panel.add(getPurchaseMenuPane(), getConstraintsForPurchaseMenu());
+    buttonPane = getPurchaseMenuPane();
+    panel.add(buttonPane, getConstraintsForPurchaseMenu());
 
     // Add the main purchase-panel
     purchasePane = new PurchaseItemPanel(model);
@@ -167,12 +175,16 @@ public class PurchaseTab {
   protected void submitPurchaseButtonClicked() {
     log.info("Sale complete");
     try {
-      log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
-      domainController.submitCurrentPurchase(
-          model.getCurrentPurchaseTableModel().getTableRows()
-      );
-      endSale();
-      model.getCurrentPurchaseTableModel().clear();
+    	log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
+      	List<SoldItem> rows = model.getCurrentPurchaseTableModel().getTableRows();
+      	if(rows.size() > 0) {
+		      purchasePane.showConfirmPane(rows);
+		      domainController.submitCurrentPurchase(rows);
+		      //endSale();
+		      //model.getCurrentPurchaseTableModel().clear();
+		} else {
+			purchasePane.showError("Lisage mõni toode");
+		}
     } catch (VerificationFailedException e1) {
       log.error(e1.getMessage());
     }
