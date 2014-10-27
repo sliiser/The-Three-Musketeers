@@ -13,14 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
 
 public class IntroUI extends JFrame {
 
-	private static final Logger log = Logger.getLogger(IntroUI.class);
 	private static final long serialVersionUID = 1L;
 	
 	JPanel panel;
@@ -29,8 +24,6 @@ public class IntroUI extends JFrame {
 	
 	IntroUI() {
 		super("Hello!");
-		ConsoleAppender consoleAppender=new ConsoleAppender(new PatternLayout("%d %p [%c] - %m%n"));
-		BasicConfigurator.configure(consoleAppender);
 		setLayout(new FlowLayout(FlowLayout.CENTER,20,20));
 		setSize(500,400);
 		setResizable(false);
@@ -58,9 +51,9 @@ public class IntroUI extends JFrame {
 			add(new JLabel(new ImageIcon(getClass().getResource("/res/logo.png"))));
 		    add(teamName); 
 		    add(teamDesc);
-			log.info("window is open");
+		    Intro.log.info("window is open");
 		} catch (IOException e) {
-			log.error("IOException when loading properties or image", e);
+			Intro.log.error("IOException when loading properties or image", e);
 		}
 	}
 }
