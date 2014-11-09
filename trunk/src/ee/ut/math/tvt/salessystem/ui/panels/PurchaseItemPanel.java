@@ -182,11 +182,7 @@ public class PurchaseItemPanel extends JPanel {
 
         // Initialize the textfields
         barCodeField = new JComboBox<ComboItem>();
-
-		barCodeField.addItem(new ComboItem((long) 0, "Vali toode"));
-		for (final StockItem stockItem : model.getWarehouseTableModel().rows) {
-			barCodeField.addItem(new ComboItem(stockItem.getId(), stockItem.getName()));
-		}
+        updateDropdown();
         quantityField = new JTextField("1");
         nameField = new JTextField();
         priceField = new JTextField();
@@ -194,7 +190,9 @@ public class PurchaseItemPanel extends JPanel {
         // Fill the dialog fields if the bar code text field loses focus
         barCodeField.addActionListener (new ActionListener () {
             public void actionPerformed(ActionEvent e) {
+            	if(barCodeField.getItemCount() > 0) {
             	fillDialogFields();
+            	}
             }
         });
 
@@ -248,6 +246,13 @@ public class PurchaseItemPanel extends JPanel {
         } else {
             reset();
         }
+    }
+    public void updateDropdown() {
+    	barCodeField.removeAllItems();
+		barCodeField.addItem(new ComboItem((long) 0, "Vali toode"));
+		for (final StockItem stockItem : model.getWarehouseTableModel().rows) {
+			barCodeField.addItem(new ComboItem(stockItem.getId(), stockItem.getName()));
+		}
     }
 
     // Search the warehouse for a StockItem with the bar code entered

@@ -157,6 +157,7 @@ public class PurchaseTab {
     try {
       domainController.startNewPurchase();
       startNewSale();
+      
     } catch (VerificationFailedException e1) {
       log.error(e1.getMessage());
     }
@@ -214,8 +215,8 @@ public class PurchaseTab {
 
   // switch UI to the state that allows to proceed with the purchase
   private void startNewSale() {
+	  purchasePane.updateDropdown();
     purchasePane.reset();
-
     purchasePane.setEnabled(true);
     submitPurchase.setEnabled(true);
     cancelPurchase.setEnabled(true);
