@@ -8,6 +8,7 @@
 	<property name="res.dir" value="${basedir}/res" />
 	<property name="lib.dir" value="${basedir}/lib" />
 	<!-- BEGIN database variables -->
+	<property name="conf.dir" value="${basedir}/conf" />
 	<property name="data.dir" value="${basedir}/data"/>
 	<property name="db.file" value="${data.dir}/POSdb"/>
 	<property name="db.alias" value="POS"/>
@@ -20,23 +21,14 @@
 	<property name="repo.url" value="github.com/sliiser/The-Three-Musketeers.git" />
 
 	<path id="compile.classpath">
+		<pathelement location="${build.classes.dir}" />
+		<pathelement location="${props.dir}" />
+		<pathelement location="${res.dir}" />
+		<pathelement location="${conf.dir}"/>
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
 		<fileset dir="${lib.hibernate.dir}">
-             <include name="*.jar"/>
-        </fileset>
-	</path>
-	
-	<path id="run.classpath">
-        <pathelement location="${build.classes.dir}"/>
-        <!-- configuration -->
-        <pathelement location="${conf.dir}"/>
-        <fileset dir="${lib.dir}">
-            <include name="*.jar"/>
-        </fileset>
-
-        <fileset dir="${lib.hibernate.dir}">
              <include name="*.jar"/>
         </fileset>
 	</path>
@@ -45,9 +37,13 @@
 		<pathelement location="${build.classes.dir}" />
 		<pathelement location="${props.dir}" />
 		<pathelement location="${res.dir}" />
+		<pathelement location="${conf.dir}"/>
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
+		<fileset dir="${lib.hibernate.dir}">
+             <include name="*.jar"/>
+        </fileset>
 	</path>
 
 	<target name="run" depends="build" description="Run Intro">
@@ -159,7 +155,7 @@
 	<target name="dbmanager" description="Start the HSQLDB manager">
         <java
             classname="org.hsqldb.util.DatabaseManagerSwing"
-            classpathref="run.classpath"
+            classpathref="test.classpath"
             fork="yes"
         >
             <arg line="--user sa --url ${db.url}" />
@@ -169,7 +165,7 @@
     <target name="startdb" description="Start the HSQLDB with the default params">
         <java
             classname="org.hsqldb.Server"
-            classpathref="run.classpath"
+            classpathref="test.classpath"
             fork="yes"
         >
             <arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" /> 
