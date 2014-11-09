@@ -145,7 +145,12 @@ public class AddItemPanel extends JFrame {
         return panel;
     }
     public void checkFields() {
-        if (!idField.getText().trim().isEmpty() && !nameField.getText().trim().isEmpty() && !priceField.getText().trim().isEmpty() && !quantityField.getText().trim().isEmpty()) {
+        if (!idField.getText().trim().isEmpty() && 
+        		!nameField.getText().trim().isEmpty() && 
+        		!priceField.getText().trim().isEmpty() && 
+        		!quantityField.getText().trim().isEmpty() &&
+        		Integer.parseInt(quantityField.getText()) > 0
+        	) {
         	setEnabled(true);
         }
     }

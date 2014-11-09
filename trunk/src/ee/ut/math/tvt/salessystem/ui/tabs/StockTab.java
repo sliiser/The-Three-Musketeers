@@ -114,6 +114,5 @@ public class StockTab {
     // Ava modal
     addItemPane = new AddItemPanel(model);
     addItemPane.setVisible(true);
-    //addItemPane.setAlwaysOnTop(true);
   }
 }
