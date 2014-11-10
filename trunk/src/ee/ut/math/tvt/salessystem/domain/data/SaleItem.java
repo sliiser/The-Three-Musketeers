@@ -14,6 +14,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.log4j.Logger;
+import org.hibernate.Session;
+
+import ee.ut.math.tvt.salessystem.util.HibernateUtil;
+import ee.ut.math.tvt.t3m.Intro;
+
 /**
  * Already bought HistoryItem. stockItem duplicates name and price for
  * preserving history.
@@ -37,17 +43,19 @@ public class SaleItem implements Cloneable, DisplayableItem {
 
     @Transient
 	private List<SoldItem> items;
-	
+
+    @Transient
+	public static final Logger log = Logger.getLogger(SaleItem.class);
+
+    
+
 	public SaleItem() {
-		this(new SimpleDateFormat("yyyy/MM/dd").format(new Date()),
-				new SimpleDateFormat("HH:mm:ss").format(new Date()));
+		log.debug(this.time);
 	}
-
-	public SaleItem(String date, String time) {
-		this.date = date;
-		this.time = time;
+	public void setCurrentDate() {
+		this.date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+		this.time = new SimpleDateFormat("HH:mm:ss").format(new Date());
 	}
-
 	public String getDate() {
 		return date;
 	}
@@ -60,8 +68,19 @@ public class SaleItem implements Cloneable, DisplayableItem {
 		return total;
 	}
 
+    public void setID(Long id) {
+        this.id = id;
+    }
+	public Long getID() {
+		return id;
+	}
+
 	public List<SoldItem> getItems() {
-		return items;
+		if(items == null) {
+			return HibernateUtil.currentSession().createQuery("from SoldItem where SALE_ID = " + id).list();
+		} else {
+			return items;
+		}
 	}
 
 	@Override
@@ -69,7 +88,6 @@ public class SaleItem implements Cloneable, DisplayableItem {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	public void addRows(List<SoldItem> items) {
 		double total = 0;
 		this.items = items;

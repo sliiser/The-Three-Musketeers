@@ -193,11 +193,12 @@ public class PurchaseTab {
 	 try {
       List<SoldItem> rows = model.getCurrentPurchaseTableModel().getTableRows();
       
-      SaleItem addMe = new SaleItem();
-      addMe.addRows(rows);
-	  model.getHistoryTableModel().addItem(addMe);
+      SaleItem saleItem = new SaleItem();
+      saleItem.addRows(rows);
+      saleItem.setCurrentDate();
+	  model.getHistoryTableModel().addItem(saleItem);
 	  
-      domainController.submitCurrentPurchase(rows);
+      domainController.submitCurrentPurchase(rows, saleItem);
       endSale();
       model.getCurrentPurchaseTableModel().clear();
     } catch (VerificationFailedException e1) {

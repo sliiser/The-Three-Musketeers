@@ -41,13 +41,17 @@ public interface SalesDomainController {
      * 
      * @param goods
      *            Goods that the buyer has chosen to buy.
+     * @param saleItem 
      * @throws VerificationFailedException
      */
-    public void submitCurrentPurchase(List<SoldItem> goods)
+    public void submitCurrentPurchase(List<SoldItem> goods, SaleItem saleItem)
             throws VerificationFailedException;
     
     public void endSession();
 
 	public List<SaleItem> loadHistoryState();
+
+	void submitCurrentPurchase(List<SoldItem> goods)
+			throws VerificationFailedException;
     
 }

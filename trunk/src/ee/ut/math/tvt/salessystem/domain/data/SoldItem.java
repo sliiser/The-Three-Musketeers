@@ -26,12 +26,17 @@ public class SoldItem implements Cloneable, DisplayableItem {
     @JoinColumn(name = "STOCKITEM_ID", nullable = false)
     private StockItem stockItem;
 	@Column
+	private Long sale_id;
+	@Column
     private String name;
     @Column
     private Integer quantity;
     @Column(name = "ITEMPRICE")
     private double price;
     
+    public SoldItem() {
+    	
+    }
     public SoldItem(StockItem stockItem, int quantity) {
         this.stockItem = stockItem;
         this.id = stockItem.getId();
@@ -48,6 +53,10 @@ public class SoldItem implements Cloneable, DisplayableItem {
     
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public void setSaleId(Long id) {
+    	this.sale_id = id;
     }
     
     public String getName() {
