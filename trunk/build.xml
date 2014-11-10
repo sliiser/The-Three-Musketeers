@@ -7,18 +7,18 @@
 	<property name="doc.dir" value="${build.dir}/doc" />
 	<property name="res.dir" value="${basedir}/res" />
 	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="props.dir" value="${basedir}/properties" />
+	<property name="jar.dir" value="${build.dir}/jar" />
+	<property name="jar.file.path" value="${jar.dir}/t3m.jar" />
+	<property name="repo.url" value="github.com/sliiser/The-Three-Musketeers.git" />
+	
 	<!-- BEGIN database variables -->
 	<property name="conf.dir" value="${basedir}/conf" />
 	<property name="data.dir" value="${basedir}/data"/>
 	<property name="db.file" value="${data.dir}/POSdb"/>
 	<property name="db.alias" value="POS"/>
 	<property name="db.url" value="jdbc:hsqldb:hsql://localhost/POS"/>
-	<property name="lib.hibernate.dir" value="${lib.dir}/hibernate"/>
 	<!-- END database variables -->
-	<property name="props.dir" value="${basedir}/properties" />
-	<property name="jar.dir" value="${build.dir}/jar" />
-	<property name="jar.file.path" value="${jar.dir}/t3m.jar" />
-	<property name="repo.url" value="github.com/sliiser/The-Three-Musketeers.git" />
 
 	<path id="compile.classpath">
 		<pathelement location="${build.classes.dir}" />
@@ -26,11 +26,8 @@
 		<pathelement location="${res.dir}" />
 		<pathelement location="${conf.dir}"/>
 		<fileset dir="${lib.dir}">
-			<include name="*.jar" />
+			<include name="**/*.jar" />
 		</fileset>
-		<fileset dir="${lib.hibernate.dir}">
-             <include name="*.jar"/>
-        </fileset>
 	</path>
 
 	<path id="test.classpath">
@@ -39,11 +36,8 @@
 		<pathelement location="${res.dir}" />
 		<pathelement location="${conf.dir}"/>
 		<fileset dir="${lib.dir}">
-			<include name="*.jar" />
+			<include name="**/*.jar" />
 		</fileset>
-		<fileset dir="${lib.hibernate.dir}">
-             <include name="*.jar"/>
-        </fileset>
 	</path>
 
 	<target name="run" depends="build" description="Run Intro">
@@ -170,7 +164,7 @@
         >
             <arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" /> 
         </java>
-</target>
+	</target>
 
 </project>
 
