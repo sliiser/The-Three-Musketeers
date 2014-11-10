@@ -192,11 +192,8 @@ public class PurchaseTab {
 	 log.info("Sale complete");
 	 try {
       List<SoldItem> rows = model.getCurrentPurchaseTableModel().getTableRows();
-
-	  DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-	  DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-	  Date date = new Date();
-	  HistoryItem addMe = new HistoryItem(dateFormat.format(date), timeFormat.format(date), rows);
+      
+	  HistoryItem addMe = new HistoryItem(rows);
 	  model.getHistoryTableModel().addItem(addMe);
 	  
       domainController.submitCurrentPurchase(rows);
