@@ -21,9 +21,6 @@
 	<!-- END database variables -->
 
 	<path id="compile.classpath">
-		<pathelement location="${build.classes.dir}" />
-		<pathelement location="${props.dir}" />
-		<pathelement location="${res.dir}" />
 		<pathelement location="${conf.dir}"/>
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar" />
