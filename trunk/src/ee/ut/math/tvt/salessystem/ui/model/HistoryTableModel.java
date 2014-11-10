@@ -4,22 +4,20 @@ import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 
-import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
+import ee.ut.math.tvt.salessystem.domain.data.SaleItem;
 
 /**
  * Stock item table model.
  */
-public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
+public class HistoryTableModel extends SalesSystemTableModel<SaleItem> {
 	private static final long serialVersionUID = 1L;
-
-	private static final Logger log = Logger.getLogger(StockTableModel.class);
 
 	public HistoryTableModel() {
 		super(new String[] {"Date", "Time", "Total"});
 	}
 
 	@Override
-	protected Object getColumnValue(HistoryItem item, int columnIndex) {
+	protected Object getColumnValue(SaleItem item, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
 			return item.getDate();
@@ -30,11 +28,11 @@ public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 		}
 		throw new IllegalArgumentException("Column index out of range");
 	}
-	public void addItem(final HistoryItem hItem) {
+	public void addItem(final SaleItem hItem) {
 		rows.add(hItem);
 		fireTableDataChanged();
 	}
-	public HistoryItem getItem(int index) {
+	public SaleItem getItem(int index) {
 		return rows.get(index);
 	}
 

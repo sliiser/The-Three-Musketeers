@@ -2,6 +2,7 @@ package ee.ut.math.tvt.salessystem.domain.controller;
 
 import java.util.List;
 
+import ee.ut.math.tvt.salessystem.domain.data.SaleItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
@@ -46,5 +47,7 @@ public interface SalesDomainController {
             throws VerificationFailedException;
     
     public void endSession();
+
+	public List<SaleItem> loadHistoryState();
     
 }

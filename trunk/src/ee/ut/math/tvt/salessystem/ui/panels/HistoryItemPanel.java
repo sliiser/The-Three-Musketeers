@@ -1,6 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.panels;
 
-import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
+import ee.ut.math.tvt.salessystem.domain.data.SaleItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
@@ -40,7 +40,7 @@ public class HistoryItemPanel extends JFrame {
     // Warehouse model
     private SalesSystemModel model;
 	
-    public HistoryItemPanel(SalesSystemModel model, HistoryItem item) {
+    public HistoryItemPanel(SalesSystemModel model, SaleItem item) {
     	super("History item");
         this.model = model;
         setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));

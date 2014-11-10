@@ -1,6 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
-import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
+import ee.ut.math.tvt.salessystem.domain.data.SaleItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
@@ -193,7 +193,8 @@ public class PurchaseTab {
 	 try {
       List<SoldItem> rows = model.getCurrentPurchaseTableModel().getTableRows();
       
-	  HistoryItem addMe = new HistoryItem(rows);
+      SaleItem addMe = new SaleItem();
+      addMe.addRows(rows);
 	  model.getHistoryTableModel().addItem(addMe);
 	  
       domainController.submitCurrentPurchase(rows);

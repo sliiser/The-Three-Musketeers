@@ -8,7 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
-import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
+import ee.ut.math.tvt.salessystem.domain.data.SaleItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
@@ -34,7 +34,9 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 				session.save(item);
 			}
 			//Create and insert a HistoryItem into SALES
-			session.save(new HistoryItem(goods));
+			SaleItem si = new SaleItem();
+			si.addRows(goods);
+			session.save(si);
 			
 			tx.commit();
 		}catch(HibernateException e){
@@ -57,6 +59,10 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	@SuppressWarnings("unchecked")
 	public List<StockItem> loadWarehouseState() {
 		return HibernateUtil.currentSession().createQuery("from StockItem").list();
+	}
+	@SuppressWarnings("unchecked")
+	public List<SaleItem> loadHistoryState() {
+		return HibernateUtil.currentSession().createQuery("from SaleItem").list();
 	}
 	public void endSession() {
 	    HibernateUtil.closeSession();
