@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.Client;
 
 /**
@@ -41,5 +42,11 @@ public class ClientTableModel extends SimpleSalesSystemTableModel<Client> {
 		}
 
 		return buffer.toString();
+	}
+
+	public void refresh(SalesDomainController controller) {
+		populateWithData(controller.getAllClients());
+		fireTableDataChanged();
+		
 	}
 }

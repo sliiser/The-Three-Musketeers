@@ -1,11 +1,9 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
-import ee.ut.math.tvt.salessystem.domain.data.Sale;
-import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
-import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,24 +12,28 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.data.Sale;
+import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
+import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+
 
 /**
  * Encapsulates everything that has to do with the purchase tab (the tab
  * labelled "History" in the menu).
  */
-public class HistoryTab {
-
-    private SalesSystemModel model;
+public class HistoryTab extends AbstractTab{
 
     private PurchaseInfoTableModel historyDetailsTableModel;
 
-    public HistoryTab(SalesSystemModel model) {
-        this.model = model;
+    public HistoryTab(SalesSystemModel model, SalesDomainController controller) {
+        super(model, controller);
     }
 
     /**
      * The main entry-point method. Creates the tab.
      */
+    @Override
     public Component draw() {
         JPanel panel = new JPanel();
 
@@ -112,6 +114,11 @@ public class HistoryTab {
         gc.weighty = 1.0;
         return gc;
     }
+
+	@Override
+	public void refresh() {
+		model.getPurchaseHistoryTableModel().refresh(controller);
+	}
 
 }
 

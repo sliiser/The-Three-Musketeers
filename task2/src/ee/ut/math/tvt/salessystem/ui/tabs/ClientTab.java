@@ -9,20 +9,20 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 
-public class ClientTab {
+public class ClientTab extends AbstractTab{
     
-    private SalesSystemModel model;
-    
-    public ClientTab(SalesSystemModel model) {
-        this.model = model;
+    public ClientTab(SalesSystemModel model, SalesDomainController controller) {
+        super(model, controller);
     } 
     
     /**
      * The main entry-point method. Creates the tab.
      */
+    @Override
     public Component draw() {
         JPanel panel = new JPanel();
         
@@ -64,6 +64,12 @@ public class ClientTab {
         gc.weightx = 1.0;
         gc.weighty = 1.0;
         return gc;
-    }    
+    }
+
+	@Override
+	public void refresh() {
+		model.getClientTableModel().refresh(controller);
+		
+	}    
     
 }

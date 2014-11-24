@@ -67,9 +67,5 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
     public T getRow(int index) {
         return getTableRows().get(index);
     }
-//    
-//    public List<T> getRows() {
-//        return rows;
-//    }
     
 }

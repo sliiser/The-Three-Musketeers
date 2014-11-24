@@ -25,11 +25,9 @@ import org.apache.log4j.Logger;
  * Encapsulates everything that has to do with the purchase tab (the tab
  * labelled "Point-of-sale" in the menu).
  */
-public class PurchaseTab {
+public class PurchaseTab extends AbstractTab {
 
     private static final Logger log = Logger.getLogger(PurchaseTab.class);
-
-    private final SalesDomainController domainController;
 
     private JButton newPurchase;
 
@@ -39,14 +37,11 @@ public class PurchaseTab {
 
     private PurchaseItemPanel purchasePane;
 
-    private SalesSystemModel model;
-
     private JFrame parent;
 
     public PurchaseTab(SalesDomainController controller, SalesSystemModel model,
             JFrame parent) {
-        this.domainController = controller;
-        this.model = model;
+    	super(model, controller);
         this.parent = parent;
     }
 
@@ -54,6 +49,7 @@ public class PurchaseTab {
      * The purchase tab. Consists of the purchase menu, current purchase dialog
      * and shopping cart table.
      */
+    @Override
     public Component draw() {
         JPanel panel = new JPanel();
 
@@ -139,14 +135,14 @@ public class PurchaseTab {
     /** Event handler for the <code>new purchase</code> event. */
     protected void newPurchaseButtonClicked() {
         log.info("New sale process started");
-        domainController.startNewPurchase();
+        controller.startNewPurchase();
         startNewSale();
     }
 
     /** Event handler for the <code>cancel purchase</code> event. */
     protected void cancelPurchaseButtonClicked() {
         log.info("Sale cancelled");
-        domainController.cancelCurrentPurchase();
+        controller.cancelCurrentPurchase();
         endSale();
         model.getCurrentPurchaseTableModel().clear();
 
@@ -165,7 +161,7 @@ public class PurchaseTab {
 
             log.debug("Contents of the current basket:\n"
                     + model.getCurrentPurchaseTableModel());
-            domainController.submitCurrentPurchase(
+            controller.submitCurrentPurchase(
                     model.getCurrentPurchaseTableModel().getTableRows(),
                     model.getSelectedClient());
             endSale();
@@ -202,7 +198,7 @@ public class PurchaseTab {
 
 
     private void showSelectClientDialog() {
-        List<Client> clients = domainController.getAllClients();
+        List<Client> clients = controller.getAllClients();
 
         Client currentClient = (Client)JOptionPane.showInputDialog(
                             parent,
@@ -275,5 +271,11 @@ public class PurchaseTab {
 
         return gc;
     }
+
+	@Override
+	public void refresh() {
+		//No need to refresh anything
+		//ignore
+	}
 
 }

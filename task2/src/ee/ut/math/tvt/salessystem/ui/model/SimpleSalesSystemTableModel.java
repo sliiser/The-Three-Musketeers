@@ -24,7 +24,6 @@ public abstract class SimpleSalesSystemTableModel<T extends DisplayableItem>
 	@Override
 	public void clear() {
 		rows = new ArrayList<T>();
-		fireTableDataChanged();
 
 	}
 
@@ -38,6 +37,5 @@ public abstract class SimpleSalesSystemTableModel<T extends DisplayableItem>
 	@Override
 	public void addRow(T row) {
 		rows.add(row);
-		fireTableDataChanged();
 	}
 }

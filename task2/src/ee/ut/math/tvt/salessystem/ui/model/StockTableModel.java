@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
 /**
@@ -93,6 +94,12 @@ public class StockTableModel extends SimpleSalesSystemTableModel<StockItem> {
 		}
 
 		return buffer.toString();
+	}
+
+	public void refresh(SalesDomainController controller) {
+		populateWithData(controller.getAllStockItems());
+		fireTableDataChanged();
+		
 	}
 
 }

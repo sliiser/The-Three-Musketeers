@@ -3,12 +3,14 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -18,23 +20,21 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.JTableHeader;
+
 import org.apache.log4j.Logger;
 
-public class StockTab {
+public class StockTab extends AbstractTab{
 
     private static final Logger log = Logger.getLogger(StockTab.class);
-    private final SalesDomainController controller;
-
-    private SalesSystemModel model;
 
     private JButton addItem;
 
     public StockTab(SalesSystemModel model, SalesDomainController controller) {
-        this.model = model;
-        this.controller = controller;
+        super(model, controller);
     }
 
     // warehouse stock tab - consists of a menu and a table
+    @Override
     public Component draw() {
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -188,5 +188,10 @@ public class StockTab {
             );
         }
     }
+
+	@Override
+	public void refresh() {
+		model.getWarehouseTableModel().refresh(controller);
+	}
 
 }
