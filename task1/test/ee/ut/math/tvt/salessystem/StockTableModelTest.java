@@ -1,7 +1,6 @@
 package ee.ut.math.tvt.salessystem;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.NoSuchElementException;
 
@@ -9,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
-import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 
 public class StockTableModelTest {
@@ -24,18 +22,31 @@ public class StockTableModelTest {
 	
 	@Test
 	public void testValidateNameUniqueness() {
-		/*
-		model1.addItem(item1);
-		model1.addItem(new StockItem(3L, "Lauaviin", "Light drink", 4.5, 11));
-		*/
-		// Meie POS lisab sama nimega tootele Stocki juurde, mitte ei viska errorit.
+		// Meie POS lisab sama IDga tootele Stocki juurde, mitte ei viska errorit.
+		// Sama nimi ei häiri, kui ID on erinev. Andmebaasis saab olla 2 sama nimega erinevat toodet.
 		assert(true);
-	}	
+	}
+	
+	@Test
+	public void testAddToStockSameIdDiffName(){
+		model1.addItem(item1);
+		model1.addItem(new StockItem(2L, "Viru Valge", "", 5, 3));
+		assertEquals(4, model1.getItemById(2L).getQuantity());
+	}
+	
+	@Test
+	public void testAddToStockSameNameDiffId(){
+		model1.addItem(item1);
+		model1.addItem(new StockItem(3L, "Lauaviin", "", 4.5, 3));
+		assertEquals(1, model1.getItemById(2L).getQuantity());
+		assertEquals(3, model1.getItemById(3L).getQuantity());
+	}
 	
 	
 	@Test
 	public void testHasEnoughInStock() {
 		// Meie POS ei implementeeri seda siin.
+		// Vaata PurchaseItemPanel.addItemEventHandler()
 		assert(true);
 	}
 	
