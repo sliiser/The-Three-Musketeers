@@ -167,4 +167,8 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		fireTableDataChanged();
 	}
 
+	public Sale getSale() {
+		return sale;
+	}
+
 }

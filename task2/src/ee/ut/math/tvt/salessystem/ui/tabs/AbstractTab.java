@@ -10,7 +10,7 @@ public abstract class AbstractTab {
 	protected SalesSystemModel model;
     protected final SalesDomainController controller;
 
-	public AbstractTab(SalesSystemModel model, SalesDomainController controller) {
+	AbstractTab(SalesSystemModel model, SalesDomainController controller) {
 		this.model = model;
 		this.controller = controller;
 
