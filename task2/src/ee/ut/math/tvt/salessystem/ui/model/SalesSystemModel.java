@@ -3,8 +3,6 @@ package ee.ut.math.tvt.salessystem.ui.model;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.Client;
 import ee.ut.math.tvt.salessystem.domain.data.Sale;
-import ee.ut.math.tvt.salessystem.domain.data.StockItem;
-import java.util.List;
 
 /**
  * Main model. Holds all the other models.
@@ -69,6 +67,7 @@ public class SalesSystemModel {
 
     public void setSelectedClient(Client client) {
         this.selectedClient = client;
+        currentPurchaseTableModel.showSale(new Sale(client));
     }
 
 }

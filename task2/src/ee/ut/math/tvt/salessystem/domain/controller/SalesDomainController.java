@@ -45,15 +45,15 @@ public interface SalesDomainController {
      */
     public void cancelCurrentPurchase();
 
-    /**
-     * Commit business transaction - purchase of goods.
-     *
-     * @param goods
-     *            Goods that the buyer has chosen to buy.
-     * @throws VerificationFailedException
-     */
-    public void submitCurrentPurchase(List<SoldItem> goods, Client client)
-            throws VerificationFailedException;
+//    /**
+//     * Commit business transaction - purchase of goods.
+//     *
+//     * @param goods
+//     *            Goods that the buyer has chosen to buy.
+//     * @throws VerificationFailedException
+//     */
+//    public void submitCurrentPurchase(List<SoldItem> goods, Client client)
+//            throws VerificationFailedException;
 
 
     public void setModel(SalesSystemModel model);
@@ -62,4 +62,7 @@ public interface SalesDomainController {
      * Close all resources
      */
     public void endSession();
+
+
+	void registerSale(Sale sale);
 }
