@@ -1,11 +1,37 @@
-2009-10-18 16:20:54,517 [main] DEBUG - Strating SalesSystem with the Swing UI ..
-2009-10-18 16:20:54,985 [main] INFO - 4 items loaded from disk
-2009-10-18 16:20:55,001 [main] INFO - 1 clients loaded from disk
-2009-10-18 16:20:55,016 [main] INFO - 7 Sales loaded from disk
-2009-10-18 16:20:55,859 [main] INFO - SalesSystem started
-2009-10-18 16:22:11,270 [AWT-EventQueue-0] DEBUG -  === Comparing: kohv vs. Layz krõpsud
-2009-10-18 16:22:11,270 [AWT-EventQueue-0] DEBUG -  === Comparing: kohv vs. Õlle vorstikesed
-2009-10-18 16:22:11,270 [AWT-EventQueue-0] DEBUG -  === Comparing: kohv vs. Pähklid
-2009-10-18 16:22:11,286 [AWT-EventQueue-0] DEBUG -  === Comparing: kohv vs. Kõrsikud 
-2009-10-18 16:22:11,332 [AWT-EventQueue-0] INFO - Added new stockItem : kohv
-2009-10-18 16:22:16,200 [AWT-EventQueue-0] INFO - SalesSystem closed
+2014-11-24 17:20:22,125 [main] DEBUG - Strating SalesSystem with the Swing UI ..
+2014-11-24 17:20:22,351 [main] INFO - 5 items loaded from disk
+2014-11-24 17:20:22,354 [main] INFO - 1 clients loaded from disk
+2014-11-24 17:20:22,364 [main] INFO - 7 Sales loaded from disk
+2014-11-24 17:20:22,602 [main] INFO - SalesSystem started
+2014-11-24 17:20:51,556 [AWT-EventQueue-0] INFO - New sale process started
+2014-11-24 17:20:51,556 [AWT-EventQueue-0] INFO - New purchase started
+2014-11-24 17:20:51,558 [AWT-EventQueue-0] INFO - 1 clients loaded from disk
+2014-11-24 17:20:55,075 [AWT-EventQueue-0] INFO - Client Toomas with ID=1 got selected.
+2014-11-24 17:21:01,931 [AWT-EventQueue-0] DEBUG - Added Pähklid quantity of 1
+2014-11-24 17:21:05,717 [AWT-EventQueue-0] DEBUG - Added Õlle vorstikesed quantity of 1
+2014-11-24 17:21:12,793 [AWT-EventQueue-0] DEBUG - Added kohv quantity of 2
+2014-11-24 17:21:23,194 [AWT-EventQueue-0] INFO - Sale complete
+2014-11-24 17:21:23,195 [AWT-EventQueue-0] DEBUG - Contents of the current basket:
+Id	Name	Price	Quantity	Sum	
+null	kohv	19.0	2	38.0	
+null	Pähklid	10.0	1	10.0	
+null	Õlle vorstikesed	15.0	1	15.0	
+
+2014-11-24 17:22:33,403 [AWT-EventQueue-0] INFO - New sale process started
+2014-11-24 17:22:33,403 [AWT-EventQueue-0] INFO - New purchase started
+2014-11-24 17:22:33,406 [AWT-EventQueue-0] INFO - 1 clients loaded from disk
+2014-11-24 17:22:34,540 [AWT-EventQueue-0] INFO - Client Toomas with ID=1 got selected.
+2014-11-24 17:22:37,377 [AWT-EventQueue-0] DEBUG - Added Layz krõpsud quantity of 1
+2014-11-24 17:22:38,448 [AWT-EventQueue-0] INFO - Sale cancelled
+2014-11-24 17:22:38,448 [AWT-EventQueue-0] INFO - Current purchase canceled
+2014-11-24 17:22:42,219 [AWT-EventQueue-0] INFO - New sale process started
+2014-11-24 17:22:42,219 [AWT-EventQueue-0] INFO - New purchase started
+2014-11-24 17:22:42,221 [AWT-EventQueue-0] INFO - 1 clients loaded from disk
+2014-11-24 17:22:44,108 [AWT-EventQueue-0] INFO - No client selected
+2014-11-24 17:22:48,387 [AWT-EventQueue-0] DEBUG - Added Layz krõpsud quantity of 1
+2014-11-24 17:22:54,827 [AWT-EventQueue-0] INFO - Sale complete
+2014-11-24 17:22:54,827 [AWT-EventQueue-0] DEBUG - Contents of the current basket:
+Id	Name	Price	Quantity	Sum	
+null	Layz krõpsud	10.5	1	10.5	
+
+2014-11-24 17:23:27,790 [AWT-EventQueue-0] INFO - SalesSystem closed

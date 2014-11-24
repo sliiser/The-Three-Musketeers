@@ -8,7 +8,7 @@ import ee.ut.math.tvt.salessystem.domain.data.Sale;
 /**
  * Purchase history model.
  */
-public class PurchaseHistoryTableModel extends SalesSystemTableModel<Sale> {
+public class PurchaseHistoryTableModel extends SimpleSalesSystemTableModel<Sale> {
 	private static final long serialVersionUID = 1L;
 
 	private static DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");

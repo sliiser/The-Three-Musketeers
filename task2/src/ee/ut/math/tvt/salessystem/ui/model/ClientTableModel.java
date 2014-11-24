@@ -5,7 +5,7 @@ import ee.ut.math.tvt.salessystem.domain.data.Client;
 /**
  * Client model.
  */
-public class ClientTableModel extends SalesSystemTableModel<Client> {
+public class ClientTableModel extends SimpleSalesSystemTableModel<Client> {
 	private static final long serialVersionUID = 1L;
 
 	public ClientTableModel() {

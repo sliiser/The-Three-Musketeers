@@ -9,7 +9,7 @@ import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 /**
  * Stock item table model.
  */
-public class StockTableModel extends SalesSystemTableModel<StockItem> {
+public class StockTableModel extends SimpleSalesSystemTableModel<StockItem> {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(StockTableModel.class);
