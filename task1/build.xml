@@ -3,6 +3,8 @@
 
 	<property name="build.dir" value="${basedir}/build" />
 	<property name="build.classes.dir" value="${build.dir}/classes" />
+	<property name="build.test.dir" value="${build.dir}/test"/>
+
 	<property name="src.dir" value="${basedir}/src" />
 	<property name="doc.dir" value="${build.dir}/doc" />
 	<property name="res.dir" value="${basedir}/res" />
@@ -11,6 +13,7 @@
 	<property name="jar.dir" value="${build.dir}/jar" />
 	<property name="jar.file.path" value="${jar.dir}/t3m.jar" />
 	<property name="repo.url" value="github.com/sliiser/The-Three-Musketeers.git" />
+	<property name="test.dir"   value="${basedir}/test"/>
 	
 	<!-- BEGIN database variables -->
 	<property name="conf.dir" value="${basedir}/conf" />
@@ -19,6 +22,15 @@
 	<property name="db.alias" value="POS"/>
 	<property name="db.url" value="jdbc:hsqldb:hsql://localhost/POS"/>
 	<!-- END database variables -->
+
+
+	<path id="test-classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	    <pathelement path="${build.classes.dir}/" />
+		<pathelement path="${build.test.dir}/" />
+	</path>
 
 	<path id="compile.classpath">
 		<pathelement location="${conf.dir}"/>
@@ -29,6 +41,7 @@
 
 	<path id="test.classpath">
 		<pathelement location="${build.classes.dir}" />
+		<pathelement path="${build.test.dir}/" />
 		<pathelement location="${props.dir}" />
 		<pathelement location="${res.dir}" />
 		<pathelement location="${conf.dir}"/>
@@ -161,6 +174,31 @@
         >
             <arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" /> 
         </java>
+	</target>
+
+	<target name="build-tests" depends="build" description="Build the system">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes.dir}" />
+		<mkdir dir="${build.test.dir}" />
+		<javac srcdir="${test.dir}" destdir="${build.test.dir}" debug="true" debuglevel="lines,vars,source" encoding="utf-8" compiler="modern" target="1.8" source="1.8" includeantruntime="false">
+			<classpath refid="compile.classpath" />
+
+			<classpath>
+				<pathelement path="${build.classes.dir}" />
+			</classpath>
+
+		</javac>
+		
+	</target>
+
+	<target name="test" depends="build-tests" description="Run the POS application">
+		<junit>
+			<classpath refid="test-classpath" />
+			<formatter type="brief" usefile="false" />
+			<batchtest>
+				<fileset dir="${build.test.dir}" includes="**/*.class" />
+			</batchtest>
+		</junit>
 	</target>
 
 </project>
