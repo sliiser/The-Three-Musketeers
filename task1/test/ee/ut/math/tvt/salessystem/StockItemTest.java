@@ -32,4 +32,9 @@ public class StockItemTest {
 		assertEquals(item1.getColumn(3), item1.getQuantity());
 	}
 	
+	@Test(expected = RuntimeException.class)
+	public void testGetColumnOutOfIndexThrowException() {
+		item1.getColumn(4);
+	}
+	
 }
