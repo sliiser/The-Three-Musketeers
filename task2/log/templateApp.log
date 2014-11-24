@@ -1,0 +1,11 @@
+2009-10-18 16:20:54,517 [main] DEBUG - Strating SalesSystem with the Swing UI ..
+2009-10-18 16:20:54,985 [main] INFO - 4 items loaded from disk
+2009-10-18 16:20:55,001 [main] INFO - 1 clients loaded from disk
+2009-10-18 16:20:55,016 [main] INFO - 7 Sales loaded from disk
+2009-10-18 16:20:55,859 [main] INFO - SalesSystem started
+2009-10-18 16:22:11,270 [AWT-EventQueue-0] DEBUG -  === Comparing: kohv vs. Layz krõpsud
+2009-10-18 16:22:11,270 [AWT-EventQueue-0] DEBUG -  === Comparing: kohv vs. Õlle vorstikesed
+2009-10-18 16:22:11,270 [AWT-EventQueue-0] DEBUG -  === Comparing: kohv vs. Pähklid
+2009-10-18 16:22:11,286 [AWT-EventQueue-0] DEBUG -  === Comparing: kohv vs. Kõrsikud 
+2009-10-18 16:22:11,332 [AWT-EventQueue-0] INFO - Added new stockItem : kohv
+2009-10-18 16:22:16,200 [AWT-EventQueue-0] INFO - SalesSystem closed
