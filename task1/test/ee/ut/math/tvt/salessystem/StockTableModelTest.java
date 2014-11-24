@@ -1,8 +1,10 @@
 package ee.ut.math.tvt.salessystem;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.NoSuchElementException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,11 +28,12 @@ public class StockTableModelTest {
 		model1.addItem(new StockItem(3L, "Lauaviin", "Light drink", 4.5, 11));
 	}	
 	
-	/* Panime selle SaleItemi alla
+	
 	@Test
 	public void testHasEnoughInStock() {
+		fail("no such method");
 	}
-	*/
+	
 	
 	@Test
 	public void testGetItemByIdWhenItemExists() {

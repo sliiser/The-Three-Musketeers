@@ -71,9 +71,4 @@ public class PurhaseInfoTableModelTest {
 		saleItem.setCurrentDate();
 		assertEquals(saleItem.getTotal(),0.0,0.0001);
 	}
-	
-	@Test
-	public void testHasEnoughInStock() {
-		// TO DO 
-	}
 }
